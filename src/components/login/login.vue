@@ -45,7 +45,7 @@
         methods: {
             submitFrom: function (formName) {
                 let that = this;
-                console.log(this.$refs[formName])
+                // console.log(this.$refs[formName])
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         that.$router.push('/home');

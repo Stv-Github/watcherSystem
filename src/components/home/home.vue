@@ -2,6 +2,9 @@
     <div class="home">
         <v-header></v-header>
         <v-sidebar></v-sidebar>
+        <div class="content">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
@@ -21,6 +24,6 @@
     }
 </script>
 
-<style lang='stylus'>
+<style lang='stylus' scoped>
     @import './home.styl';
 </style>

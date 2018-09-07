@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/login/login'
 import Home from '@/components/home/home'
+
+
 
 Vue.use(Router)
 
@@ -14,12 +15,30 @@ export default new Router({
     {
       path: '/home',
       name: 'home',
-      component: Home
+      component: Home,
+      children: [
+        {
+            path:'/', //首页
+            name:'introduce',
+            component: resolve => require(['../components/introduce/introduce'], resolve)
+        },
+        {
+            path: '/userTable', //用户列表
+            name: 'userTable',
+            component: resolve => require(['../components/userTable/userTable'], resolve)
+        },
+        {
+          path: '/articles', //发布管理
+          name: 'articles',
+          component: resolve => (['../components/articles/articles'], resolve)
+        }
+        
+      ]
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: resolve => require(['../components/login/login'], resolve)
     }
   ]
 })

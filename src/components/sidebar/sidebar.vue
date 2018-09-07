@@ -1,32 +1,25 @@
 <template>
     <div class="sidebar">
-        <el-menu default-active="0" class="el-menu-vertical-demo el-menu--dark" @open="handleOpen" @close="handleClose" text-color="#BFCBD9" >
-            <el-menu-item index="0">
-                <i class="el-icon-menu"></i>
-                <span slot="title">首页</span>
-            </el-menu-item>
-            <el-submenu index="1">
-                <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>导航一</span>
+        <el-menu unique-opened router :default-active="onRoutes" class="el-menu-vertical-demo el-menu--dark" @open="handleOpen" @close="handleClose" text-color="#BFCBD9" >
+            <template v-for='item in items'>
+                <template v-if='item.subs'>
+                    <el-submenu :index="item.index">
+                        <template slot="title">
+                            <i :class="item.icon"></i>
+                            <span>{{ item.title }}</span>
+                        </template>
+                        <template v-for='subItem in item.subs'>
+                            <el-menu-item v-bind:index="subItem.index">{{ subItem.title }}</el-menu-item>
+                        </template>
+                    </el-submenu>
                 </template>
-                <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
-                <el-menu-item index="1-3">选项3</el-menu-item>
-                <el-menu-item index="1-4">选项4</el-menu-item>
-            </el-submenu>
-            <el-menu-item index="2">
-                <i class="el-icon-menu"></i>
-                <span slot="title">导航二</span>
-            </el-menu-item>
-            <el-menu-item index="3">
-                <i class="el-icon-document"></i>
-                <span slot="title">导航三</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-                <i class="el-icon-setting"></i>
-                <span slot="title">导航四</span>
-            </el-menu-item>
+                <template v-else>
+                    <el-menu-item :index="item.index">
+                        <i :class="item.icon"></i>
+                        <span slot="title">{{ item.title }}</span>
+                    </el-menu-item>
+                </template>
+            </template>
         </el-menu>
     </div>
 </template>
@@ -35,7 +28,57 @@
     export default {
         data() {
             return {
-
+                items: [
+                    {
+                        icon: 'el-icon-setting',
+                        index: 'home',
+                        title: '首页'
+                    },
+                    {
+                        icon: 'el-icon-menu',
+                        index: '2',
+                        title: '客户CRM',
+                        subs: [
+                            {
+                                index: 'userTable',
+                                title: '客户管理'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'el-icon-date',
+                        index: '3',
+                        title: '表单',
+                        subs: [
+                            {
+                                index: 'baseform',
+                                title: '基本表单'
+                            },
+                            {
+                                index: 'vueeditor',
+                                title: '编辑器'
+                            },
+                            {
+                                index: 'markdown',
+                                title: 'markdown'
+                            },
+                            {
+                                index: 'upload',
+                                title: '文件上传'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'el-icon-star-on',
+                        index: 'articles',
+                        title: '帖子'
+                    },
+                    {
+                        icon: 'el-icon-upload2',
+                        index: 'drag',
+                        title: '拖拽'
+                    }
+                ]
             }
         },
         methods: {
@@ -44,6 +87,12 @@
             },
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
+            }
+        },
+        computed: {
+            onRoutes: function(){
+                // console.log(this.$route.path);
+                return this.$route.path.replace('/','');
             }
         }
     }
