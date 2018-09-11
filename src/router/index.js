@@ -28,9 +28,14 @@ export default new Router({
             component: resolve => require(['../components/userTable/userTable'], resolve)
         },
         {
-          path: '/articles', //发布管理
-          name: 'articles',
-          component: resolve => (['../components/articles/articles'], resolve)
+            path: '/articles', //发布管理
+            name: 'articles',
+            component: resolve => require(['../components/articles/articles'], resolve)
+        },
+        {
+            path: '/baseform',
+            name: 'baseform',
+            component: resolve => require(['../components/baseform/baseform'], resolve)
         }
         
       ]

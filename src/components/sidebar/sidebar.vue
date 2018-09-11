@@ -32,7 +32,7 @@
                     {
                         icon: 'el-icon-setting',
                         index: 'home',
-                        title: '首页'
+                        title: '系统首页'
                     },
                     {
                         icon: 'el-icon-menu',
@@ -48,23 +48,15 @@
                     {
                         icon: 'el-icon-date',
                         index: '3',
-                        title: '表单',
+                        title: '活动管理',
                         subs: [
                             {
                                 index: 'baseform',
-                                title: '基本表单'
+                                title: '积分兑换'
                             },
                             {
                                 index: 'vueeditor',
-                                title: '编辑器'
-                            },
-                            {
-                                index: 'markdown',
-                                title: 'markdown'
-                            },
-                            {
-                                index: 'upload',
-                                title: '文件上传'
+                                title: '限时抢购'
                             }
                         ]
                     },

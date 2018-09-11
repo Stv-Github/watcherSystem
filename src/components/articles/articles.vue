@@ -1,5 +1,18 @@
 <template>
     <div>
-        2433333333333
+        <el-breadcrumb separator="/">
+            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>帖子</el-breadcrumb-item>
+        </el-breadcrumb>
     </div>
 </template>
+
+<script>
+    export default {
+        data() {
+            return {
+                
+            }
+        }
+    }
+</script>
