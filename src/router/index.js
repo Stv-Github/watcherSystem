@@ -36,6 +36,11 @@ export default new Router({
             path: '/baseform',
             name: 'baseform',
             component: resolve => require(['../components/baseform/baseform'], resolve)
+        },
+        {
+            path: '/editUserInfo',  //编辑用户信息
+            name: 'editUserInfo',
+            component: resolve => require(['../components/common/editUserInfo/editUserInfo'], resolve)
         }
         
       ]
