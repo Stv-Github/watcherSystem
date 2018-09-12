@@ -29,18 +29,9 @@
                     </el-select>
                     <el-input
                         placeholder="筛选关键词"
-                        prefix-icon="el-icon-search"
-                        v-model="handleInput" size='small'>
+                        suffix-icon="el-icon-search"
+                        v-model="handleInput" size='small' class="handleInput">
                     </el-input>
-                    <!-- <el-input placeholder="筛选关键词" v-model="handleInput" class="input-with-select">
-                        <el-select v-model="handleSelect" slot="prepend" placeholder="筛选省份">
-                            <el-option label="全部" value="1"></el-option>
-                            <el-option label="上海" value="2"></el-option>
-                            <el-option label="北京" value="3"></el-option>
-                            <el-option label="广东" value="4"></el-option>
-                        </el-select>
-                        <el-button slot="append" icon="el-icon-search"></el-button>
-                    </el-input> -->
                 </div>
             </div>
             <template>
@@ -61,21 +52,10 @@
                                 <el-form-item label="邮编">
                                     <span>{{ props.row.zip }}</span>
                                 </el-form-item>
-                                <!--<el-form-item label="商品分类">
-                                    <span>{{ props.row.category }}</span>
-                                </el-form-item>
-                                <el-form-item label="店铺地址">
-                                    <span>{{ props.row.address }}</span>
-                                </el-form-item>
-                                <el-form-item label="商品描述">
-                                    <span>{{ props.row.desc }}</span>
-                                </el-form-item>-->
                             </el-form>
                         </template>
                     </el-table-column>
-                    <!--<el-table-column prop='serialNum' label='序号' width="60" align='center'></el-table-column>-->
                     <el-table-column prop='serialNum' label='序号' align='center' width='50'></el-table-column>
-                    <!--<el-table-column prop='userID' label='用户ID' width="150"></el-table-column>-->
                     <el-table-column prop='userID' label='用户ID'></el-table-column>
                     <el-table-column prop="name" label="姓名/昵称">
                         <template slot-scope='scope'>
