@@ -7,29 +7,41 @@
         </el-breadcrumb>
         <div class="tableContent">
             <div class="handleBox">
-                <el-row :gutter='20'>
-                    <el-col :span='2.5'>
-                        <div class="grid-content bg-purple">
-                            <el-button type='primary' size='small'>批量删除</el-button>
-                        </div>
-                    </el-col>
-                    <el-col :span='10'>
-                        <div class="grid-content bg-purple">
-                            <div>
-                                <el-input placeholder="筛选关键词" v-model="handleInput" class="input-with-select">
-                                    <el-select v-model="handleSelect" slot="prepend" placeholder="筛选省份">
-                                        <el-option label="全部" value="1"></el-option>
-                                        <el-option label="上海" value="2"></el-option>
-                                        <el-option label="北京" value="3"></el-option>
-                                        <el-option label="广东" value="4"></el-option>
-                                    </el-select>
-                                    <el-button slot="append" icon="el-icon-search"></el-button>
-                                </el-input>
-                            </div>
-                        </div>
-                    </el-col>
-                </el-row>
-                
+                <div>
+                    <el-button type='primary' size='small' @click='newUsers'>新增用户</el-button>
+                </div>
+                <div>
+                    <el-button type='danger' size='small' @click='batchDelete'>批量删除</el-button>
+                </div>
+                <div style="display: flex;">
+                    <el-select v-model="handleSelectVal" placeholder="筛选城市" size='small'>
+                        <el-option-group
+                            v-for="group in handleSelectOptions"
+                            :key="group.label"
+                            :label="group.label">
+                                <el-option
+                                v-for="item in group.options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                                </el-option>
+                        </el-option-group>
+                    </el-select>
+                    <el-input
+                        placeholder="筛选关键词"
+                        prefix-icon="el-icon-search"
+                        v-model="handleInput" size='small'>
+                    </el-input>
+                    <!-- <el-input placeholder="筛选关键词" v-model="handleInput" class="input-with-select">
+                        <el-select v-model="handleSelect" slot="prepend" placeholder="筛选省份">
+                            <el-option label="全部" value="1"></el-option>
+                            <el-option label="上海" value="2"></el-option>
+                            <el-option label="北京" value="3"></el-option>
+                            <el-option label="广东" value="4"></el-option>
+                        </el-select>
+                        <el-button slot="append" icon="el-icon-search"></el-button>
+                    </el-input> -->
+                </div>
             </div>
             <template>
                 <el-table :data="tableData" border style="width: 100%" @selection-change='handleSelectionChange'>
@@ -65,7 +77,7 @@
                     <el-table-column prop='serialNum' label='序号' align='center' width='50'></el-table-column>
                     <!--<el-table-column prop='userID' label='用户ID' width="150"></el-table-column>-->
                     <el-table-column prop='userID' label='用户ID'></el-table-column>
-                    <el-table-column prop="name" label="姓名">
+                    <el-table-column prop="name" label="姓名/昵称">
                         <template slot-scope='scope'>
                             <el-tag size="medium">{{ scope.row.name }}</el-tag>
                         </template>
@@ -109,9 +121,44 @@
     export default {
         data() {
             return{
-                handleInput: '',
-                handleSelect: '',
-                tableData: [
+                handleInput: '', //筛选关键词 
+                handleSelectVal: '',    //筛选省份的值
+                handleSelectOptions: [  //筛选省份
+                    {
+                        label: '热门城市',
+                        options: [
+                            {
+                                value: 'allCitys',
+                                label: '全部'
+                            },
+                            {
+                                value: 'Shanghai',
+                                label: '上海'
+                            }, {
+                                value: 'Beijing',
+                                label: '北京'
+                            }
+                        ]
+                    }, {
+                        label: '城市名',
+                        options: [
+                            {
+                                value: 'Chengdu',
+                                label: '成都'
+                            }, {
+                                value: 'Shenzhen',
+                                label: '深圳'
+                            }, {
+                                value: 'Guangzhou',
+                                label: '广州'
+                            }, {
+                                value: 'Dalian',
+                                label: '大连'
+                            }
+                        ]
+                    }
+                ],
+                tableData: [    //用户列表
                     {
                         serialNum: 1,
                         userID: '16050328',
@@ -207,9 +254,30 @@
             }
         },
         methods: {
-            // 单选、多选
-            handleSelectionChange: function (){
+            // 新增用户
+            newUsers: function(){
+                this.$router.push('/newUsers')
+            },
+            // 批量删除
+            batchDelete: function(){
+                this.$message({
+                    message: '请选择需要删除的项！',
+                    type: 'warning'
+                });
+            },
+            
 
+
+
+
+
+            // 单选、多选
+            handleSelectionChange: function (selection){
+                console.log(selection);
+                if(selection != ''){
+
+                }
+                console.log(this.handleSelect);
             },
             // 编辑用户信息
             handleEdit: function(e){
@@ -222,9 +290,9 @@
             handleCurrentChange: function(val) {
                 console.log(`当前页: ${val}`);
             }
-        }
+        },
     }
 </script>
-<style lang='stylus'>
+<style lang='stylus' scoped>
     @import './userTable.styl';
 </style>

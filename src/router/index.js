@@ -38,6 +38,11 @@ export default new Router({
             component: resolve => require(['../components/baseform/baseform'], resolve)
         },
         {
+            path: '/newUsers',  //新增用户
+            name: 'newUsers',
+            component: resolve => require(['../components/common/newUsers/newUsers'], resolve)
+        },
+        {
             path: '/editUserInfo',  //编辑用户信息
             name: 'editUserInfo',
             component: resolve => require(['../components/common/editUserInfo/editUserInfo'], resolve)
