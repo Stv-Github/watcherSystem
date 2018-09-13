@@ -91,5 +91,46 @@
 </script>
 
 <style lang="stylus">
-    @import './sidebar.styl';
+    .sidebar {
+        width 250px;
+        position absolute;
+        top 70px;
+        left 0;
+        bottom 0;
+        background #324157;
+        color #FFF;
+        overflow-x hidden;
+        overflow-y auto;
+    }
+    /* 定义滚动条宽高及背景 */
+    .sidebar::-webkit-scrollbar {
+        width 5px;  /* 对垂直流动条有效*/
+    }
+    /*定义滑块颜色、内阴影及圆角*/
+    .sidebar::-webkit-scrollbar-thumb{
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: orange;
+    }
+    /*定义两端按钮的样式*/
+    .sidebar::-webkit-scrollbar-button {
+        display none;
+    }
+    /* 内层轨道，需要注意的就是它会覆盖第三个属性的样式。 */
+    .sidebar::-webkit-scrollbar-track-piece {
+        background-color:cornflowerblue;
+    }
+    .el-menu--dark, .el-menu--dark .el-menu-item {
+        width 250px;
+        background-color #324157;
+    }
+    .el-menu--dark .el-submenu .el-menu, .el-menu--dark .el-submenu .el-menu-item {
+        background-color #1f2d3d;
+    }
+    .el-menu-item:hover, .el-submenu__title:hover {
+        background-color #48576a !important;
+    }
+    .el-submenu__title i, .el-menu-item i {
+        color #BFCBD9;
+    }
 </style>

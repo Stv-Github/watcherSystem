@@ -60,5 +60,35 @@
     }
 </script>
 <style lang="stylus" scoped>
-    @import './login.styl';
+    .login {
+        width: 100%;
+        height: 100%;
+        background: #363441;
+        position: relative;
+    }
+    .login_content {
+        position: absolute;
+        top: 100px;
+        left: 50%;
+        width: 50%;
+        margin-left: -25%;
+        border: 1px solid #eee;
+        border-radius: 5px;
+    }
+    .login_header {
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        background: rgba(255, 255, 255, .2);
+        font-size: 30px;
+        color: #fff;
+    }
+    .login_main {
+        padding: 20px;
+        background: #fff;
+    }
+    .login_footer {
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+    }
 </style>

@@ -11,7 +11,7 @@
                     <el-button type='primary' size='small' @click='newUsers'>新增用户</el-button>
                 </div>
                 <div>
-                    <el-button type='danger' size='small' @click='batchDelete'>批量删除</el-button>
+                    <el-button type='danger' size='small' @click='batchDelete(selectionData)'>批量删除</el-button>
                 </div>
                 <div style="display: flex;">
                     <el-select v-model="handleSelectVal" placeholder="筛选城市" size='small'>
@@ -30,7 +30,7 @@
                     <el-input
                         placeholder="筛选关键词"
                         suffix-icon="el-icon-search"
-                        v-model="handleInput" size='small' class="handleInput">
+                        v-model="handleInput" size='small' class="handleInput" ref='tabled'>
                     </el-input>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                             </el-form>
                         </template>
                     </el-table-column>
-                    <el-table-column prop='serialNum' label='序号' align='center' width='50'></el-table-column>
+                    <el-table-column type='index' label='序号' align='center' width='50'></el-table-column>
                     <el-table-column prop='userID' label='用户ID'></el-table-column>
                     <el-table-column prop="name" label="姓名/昵称">
                         <template slot-scope='scope'>
@@ -80,7 +80,7 @@
                             <el-button @click='handleEdit(scope.row)' type="text" size="small">
                                 <i class='el-icon-edit'></i> 编辑
                             </el-button>
-                            <el-button @click='handleDelete(scope.row)' class="red" type="text" size="small">
+                            <el-button @click.native.prevent='handleDelete(scope.row.name, scope.$index, tableData)' class="red" type="text" size="small">
                                 <i class="el-icon-delete"></i> 删除
                             </el-button>
                         </template>
@@ -140,96 +140,89 @@
                 ],
                 tableData: [    //用户列表
                     {
-                        serialNum: 1,
                         userID: '16050328',
                         userSex: '男',
                         userPhone: 15055122184,
                         date: '2016-05-03',
-                        name: '王小虎',
+                        name: '王小虎1',
                         province: '上海',
                         city: '普陀区',
                         address: '上海市普陀区金沙江路 1518 弄',
                         zip: 200333
                     }, {
-                        serialNum: 2,
-                        userID: '16050328',
+                        userID: '16050327',
                         userSex: '男',
                         userPhone: 15055122184,
                         date: '2016-05-02',
-                        name: '王小虎',
+                        name: '王小虎2',
                         province: '上海',
                         city: '普陀区',
                         address: '上海市普陀区金沙江路 1518 弄',
                         zip: 200333
                     }, {
-                        serialNum: 3,
-                        userID: '16050328',
+                        userID: '16050326',
                         userSex: '男',
                         userPhone: 15055122184,
                         date: '2016-05-04',
-                        name: '王小虎',
+                        name: '王小虎3',
                         province: '上海',
                         city: '普陀区',
                         address: '上海市普陀区金沙江路 1518 弄',
                         zip: 200333
                     }, {
-                        serialNum: 4,
-                        userID: '16050328',
+                        userID: '16050325',
                         userSex: '男',
                         userPhone: 15055122184,
                         date: '2016-05-01',
-                        name: '王小虎',
+                        name: '王小虎4',
                         province: '上海',
                         city: '普陀区',
                         address: '上海市普陀区金沙江路 1518 弄',
                         zip: 200333
                     },
                     {
-                        serialNum: 5,
-                        userID: '16050328',
+                        userID: '16050324',
                         userSex: '男',
                         userPhone: 15055122184,
                         date: '2016-05-03',
-                        name: '王小虎',
+                        name: '王小虎5',
                         province: '上海',
                         city: '普陀区',
                         address: '上海市普陀区金沙江路 1518 弄',
                         zip: 200333
                     }, {
-                        serialNum: 6,
-                        userID: '16050328',
+                        userID: '16050323',
                         userSex: '男',
                         userPhone: 15055122184,
                         date: '2016-05-02',
-                        name: '王小虎',
+                        name: '王小虎6',
                         province: '上海',
                         city: '普陀区',
                         address: '上海市普陀区金沙江路 1518 弄',
                         zip: 200333
                     }, {
-                        serialNum: 7,
-                        userID: '16050328',
+                        userID: '16050322',
                         userSex: '男',
                         userPhone: 15055122184,
                         date: '2016-05-04',
-                        name: '王小虎',
+                        name: '王小虎7',
                         province: '上海',
                         city: '普陀区',
                         address: '上海市普陀区金沙江路 1518 弄',
                         zip: 200333
                     }, {
-                        serialNum: 8,
-                        userID: '16050328',
+                        userID: '16050321',
                         userSex: '男',
                         userPhone: 15055122184,
                         date: '2016-05-01',
-                        name: '王小虎',
+                        name: '王小虎8',
                         province: '上海',
                         city: '普陀区',
                         address: '上海市普陀区金沙江路 1518 弄',
                         zip: 200333
                     }
                 ],
+                selectionData: [],  //批量删除的数组
                 currentPage: 2
             }
         },
@@ -239,30 +232,56 @@
                 this.$router.push('/newUsers')
             },
             // 批量删除
-            batchDelete: function(){
-                this.$message({
-                    message: '请选择需要删除的项！',
-                    type: 'warning'
-                });
+            batchDelete: function(selection){
+                let that = this;
+                let tableData = that.tableData;
+                if(selection != ''){
+                    console.log(selection)
+                    $.each(selection, (index, val) => {
+                        for(let i = 0; i < tableData.length; i ++){
+                            if(val.userID == tableData[i].userID){
+                                console.log(i)
+                                tableData.splice(i, 1);
+                                that.$message({
+                                    type: 'success',
+                                    message: '删除'+" `"+ tableData[i].name +"` "+'成功！'
+                                });
+                            }
+                        }
+                    })
+                    
+                }else{
+                    this.$message({
+                        message: '请选择需要删除的项！',
+                        type: 'warning'
+                    });
+                }
+                
             },
-            
-
-
-
-
-
             // 单选、多选
             handleSelectionChange: function (selection){
-                console.log(selection);
-                if(selection != ''){
-
-                }
-                console.log(this.handleSelect);
+                this.selectionData = selection;
             },
             // 编辑用户信息
             handleEdit: function(e){
                 console.log(e)
                 this.$router.push('/editUserInfo');
+            },
+            // 删除当前用户
+            handleDelete: function(name, index, rows){
+                this.$confirm('此操作将永久删除该用户，是否继续？', '删除提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    rows.splice(index, 1); //删除当前元素
+                    this.$message({
+                        type: 'success',
+                        message: '删除'+" `"+ name +"` "+'成功！'
+                    });
+                }).catch(() => {
+                    console.log('取消删除')
+                })
             },
             handleSizeChange: function(val) {
                 console.log(`每页 ${val} 条`);

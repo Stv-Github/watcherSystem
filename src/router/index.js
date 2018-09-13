@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/home/home'
 
 
 
@@ -15,12 +14,12 @@ export default new Router({
     {
       path: '/home',
       name: 'home',
-      component: Home,
+      component: resolve => require(['../components/pages/home'], resolve),
       children: [
         {
             path:'/', //首页
             name:'introduce',
-            component: resolve => require(['../components/introduce/introduce'], resolve)
+            component: resolve => require(['../components/pages/introduce'], resolve)
         },
         {
             path: '/userTable', //用户列表
@@ -30,22 +29,22 @@ export default new Router({
         {
             path: '/articles', //发布管理
             name: 'articles',
-            component: resolve => require(['../components/articles/articles'], resolve)
+            component: resolve => require(['../components/pages/articles'], resolve)
         },
         {
-            path: '/baseform',
+            path: '/baseform', //积分兑换
             name: 'baseform',
-            component: resolve => require(['../components/baseform/baseform'], resolve)
+            component: resolve => require(['../components/pages/baseform'], resolve)
         },
         {
             path: '/newUsers',  //新增用户
             name: 'newUsers',
-            component: resolve => require(['../components/common/newUsers/newUsers'], resolve)
+            component: resolve => require(['../components/pages/newUsers'], resolve)
         },
         {
             path: '/editUserInfo',  //编辑用户信息
             name: 'editUserInfo',
-            component: resolve => require(['../components/common/editUserInfo/editUserInfo'], resolve)
+            component: resolve => require(['../components/pages/editUserInfo'], resolve)
         }
         
       ]
@@ -53,7 +52,7 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: resolve => require(['../components/login/login'], resolve)
+      component: resolve => require(['../components/pages/login'], resolve)
     }
   ]
 })
