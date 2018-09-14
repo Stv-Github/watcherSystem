@@ -1,9 +1,11 @@
 <template>
     <div class="home">
-        <v-header></v-header>
+        <v-header @collapseChaged='parentEvent'></v-header>
         <v-sidebar></v-sidebar>
-        <div class="content">
-            <router-view></router-view>
+        <div class="content_box" :class="{'content_collapse': collapse}">
+            <div class="content">
+                <router-view></router-view>
+            </div>
         </div>
     </div>
 </template>
@@ -15,7 +17,12 @@
     export default{
         data() {
             return {
-
+                collapse: false
+            }
+        },
+        methods: {
+            parentEvent: function(e){
+                this.collapse = e;
             }
         },
         components:{
@@ -24,22 +31,31 @@
     }
 </script>
 
-<style lang='stylus' scoped>
+<style scoped>
     .home {
         width: 100%;
         height: 100%;
         overflow: hidden;
         position: relative;
     }
-    .content {
+    .content_box {
         position: absolute;
         top: 70px;
         left: 250px;
         right: 0;
         bottom: 0;
-        padding: 15px;
+        padding-bottom: 30px;
         overflow: auto;
         background-color: #f0f0f0;
+        -webkit-transition: left .3s ease-in-out;
+        transition: left .3s ease-in-out;
+    }
+    .content {
+        width: auto;
+        padding: 15px;
+    }
+    .content_collapse{
+        left: 64px;
     }
     /* 定义滚动条宽高及背景 */
     .content::-webkit-scrollbar {

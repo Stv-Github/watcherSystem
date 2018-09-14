@@ -1,6 +1,6 @@
 <template>
-    <div class="sidebar">
-        <el-menu unique-opened router :default-active="onRoutes" class="el-menu-vertical-demo el-menu--dark" @open="handleOpen" @close="handleClose" text-color="#BFCBD9" >
+    <div class="sidebar" :style="{'width': sidebarWidth +'px'}">
+        <el-menu unique-opened router :collapse='collapse' :default-active="onRoutes" class="el-menu-vertical-demo el-menu--dark" text-color="#BFCBD9" active-text-color="#20a0ff">
             <template v-for='item in items'>
                 <template v-if='item.subs'>
                     <el-submenu :index="item.index">
@@ -9,7 +9,7 @@
                             <span>{{ item.title }}</span>
                         </template>
                         <template v-for='subItem in item.subs'>
-                            <el-menu-item v-bind:index="subItem.index">{{ subItem.title }}</el-menu-item>
+                            <el-menu-item :index="subItem.index">{{ subItem.title }}</el-menu-item>
                         </template>
                     </el-submenu>
                 </template>
@@ -28,6 +28,8 @@
     export default {
         data() {
             return {
+                sidebarWidth: 64,
+                collapse: true,
                 items: [
                     {
                         icon: 'el-icon-setting',
@@ -69,16 +71,23 @@
                         icon: 'el-icon-upload2',
                         index: 'drag',
                         title: '拖拽'
+                    },
+                    {
+                        icon: 'el-icon-star-on',
+                        index: 'articles',
+                        title: '帖子'
+                    },
+                    {
+                        icon: 'el-icon-upload2',
+                        index: 'drag',
+                        title: '拖拽'
+                    },
+                    {
+                        icon: 'el-icon-star-on',
+                        index: 'articles',
+                        title: '帖子'
                     }
                 ]
-            }
-        },
-        methods: {
-            handleOpen(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            handleClose(key, keyPath) {
-                console.log(key, keyPath);
             }
         },
         computed: {
@@ -90,21 +99,21 @@
     }
 </script>
 
-<style lang="stylus">
+<style>
     .sidebar {
-        width 250px;
-        position absolute;
-        top 70px;
-        left 0;
-        bottom 0;
-        background #324157;
-        color #FFF;
-        overflow-x hidden;
-        overflow-y auto;
+        display: block;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        bottom: 0;
+        background: #324157;
+        /* color: #FFF; */
+        overflow-x: hidden;
+        overflow-y: auto;
     }
     /* 定义滚动条宽高及背景 */
     .sidebar::-webkit-scrollbar {
-        width 5px;  /* 对垂直流动条有效*/
+        width: 5px;  /* 对垂直流动条有效*/
     }
     /*定义滑块颜色、内阴影及圆角*/
     .sidebar::-webkit-scrollbar-thumb{
@@ -114,23 +123,27 @@
     }
     /*定义两端按钮的样式*/
     .sidebar::-webkit-scrollbar-button {
-        display none;
+        display: none;
     }
     /* 内层轨道，需要注意的就是它会覆盖第三个属性的样式。 */
     .sidebar::-webkit-scrollbar-track-piece {
         background-color:cornflowerblue;
     }
+
     .el-menu--dark, .el-menu--dark .el-menu-item {
-        width 250px;
-        background-color #324157;
+        width: 100%;
+        background-color: #324157;
     }
     .el-menu--dark .el-submenu .el-menu, .el-menu--dark .el-submenu .el-menu-item {
-        background-color #1f2d3d;
+        background-color: #1f2d3d;
     }
     .el-menu-item:hover, .el-submenu__title:hover {
-        background-color #48576a !important;
+        background-color: #48576a !important;
     }
     .el-submenu__title i, .el-menu-item i {
-        color #BFCBD9;
+        color: #BFCBD9;
+    }
+    .el-menu--popup-right-start{
+        background-color: #1f2d3d;
     }
 </style>
