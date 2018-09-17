@@ -1,5 +1,6 @@
 <template>
-    <div class="sidebar" :style="{'width': sidebarWidth +'px'}">
+        <!-- :style="{'width': sidebarWidth +'px'}" -->
+    <div class="sidebar" :class="{sidebared: collapse}">
         <el-menu unique-opened router :collapse='collapse' :default-active="onRoutes" class="el-menu-vertical-demo el-menu--dark" text-color="#BFCBD9" active-text-color="#20a0ff">
             <template v-for='item in items'>
                 <template v-if='item.subs'>
@@ -28,8 +29,6 @@
     export default {
         data() {
             return {
-                sidebarWidth: 64,
-                collapse: true,
                 items: [
                     {
                         icon: 'el-icon-setting',
@@ -90,26 +89,40 @@
                 ]
             }
         },
+        props: {
+            collapse: {
+                type: Boolean,
+                required: true
+            }
+        },
         computed: {
             onRoutes: function(){
                 // console.log(this.$route.path);
                 return this.$route.path.replace('/','');
             }
-        }
+        },
+        created() {
+            
+        },
     }
 </script>
 
 <style>
     .sidebar {
         display: block;
+        width: 250px;
         position: absolute;
         top: 70px;
         left: 0;
         bottom: 0;
         background: #324157;
-        /* color: #FFF; */
         overflow-x: hidden;
         overflow-y: auto;
+    }
+    .sidebared{
+        width: 64px;
+        -webkit-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
     }
     /* 定义滚动条宽高及背景 */
     .sidebar::-webkit-scrollbar {

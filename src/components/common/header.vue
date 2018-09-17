@@ -17,7 +17,7 @@
     export default {
         data() {
             return {
-                collapse: false
+                collapse: true
             }
         },
         methods: {
@@ -42,7 +42,6 @@
         min-width: 250px;
         height: 100%;
         overflow: hidden;
-        
         font-size: 22px;
     }
     .v_headerLeft i{

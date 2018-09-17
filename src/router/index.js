@@ -18,8 +18,8 @@ export default new Router({
       children: [
         {
             path:'/', //首页
-            name:'introduce',
-            component: resolve => require(['../components/pages/introduce'], resolve)
+            name:'dashBoard',
+            component: resolve => require(['../components/pages/dashBoard'], resolve)
         },
         {
             path: '/userTable', //用户列表

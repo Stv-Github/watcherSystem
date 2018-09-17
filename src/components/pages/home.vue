@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <v-header @collapseChaged='parentEvent'></v-header>
-        <v-sidebar></v-sidebar>
+        <v-sidebar :collapse='collapse'></v-sidebar>
         <div class="content_box" :class="{'content_collapse': collapse}">
             <div class="content">
                 <router-view></router-view>
@@ -17,10 +17,11 @@
     export default{
         data() {
             return {
-                collapse: false
+                collapse: true
             }
         },
         methods: {
+            // 侧边栏折叠
             parentEvent: function(e){
                 this.collapse = e;
             }
