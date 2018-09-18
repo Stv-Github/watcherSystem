@@ -143,7 +143,7 @@
         background-color:cornflowerblue;
     }
 
-    .el-menu--dark, .el-menu--dark .el-menu-item {
+    .el-menu--dark, .el-menu--dark .el-menu-item, .el-menu--dark .el-submenu {
         width: 100%;
         background-color: #324157;
     }
