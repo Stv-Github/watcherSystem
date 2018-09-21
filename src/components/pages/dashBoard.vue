@@ -25,10 +25,11 @@
                 </div>
             </el-col>
             <el-col :span='16'>
-                <div class="el_col_news">
+                <div class="grid_cont_main">
+                    <!-- 消息 -->
                     <el-row class="grid_cont_row">
                         <el-col :span='8'>
-                            <div class="el-card is_hover_shadow el_col_newsItems">
+                            <div class="el-card is_hover_shadow el_items">
                                 <i class="el-icon-edit grid_cont_icon1"></i>
                                 <div class="grid_cont_right">
                                     <p class="grid_num grid_num1">1234</p>
@@ -37,7 +38,7 @@
                             </div>
                         </el-col>
                         <el-col :span='8'>
-                            <div class="el-card is_hover_shadow el_col_newsItems">
+                            <div class="el-card is_hover_shadow el_items">
                                 <i class="el-icon-edit grid_cont_icon2"></i>
                                 <div class="grid_cont_right">
                                     <p class="grid_num grid_num2">564</p>
@@ -46,7 +47,7 @@
                             </div>
                         </el-col>
                         <el-col :span='8'>
-                            <div class="el-card is_hover_shadow el_col_newsItems">
+                            <div class="el-card is_hover_shadow el_items">
                                 <i class="el-icon-edit grid_cont_icon3"></i>
                                 <div class="grid_cont_right">
                                     <p class="grid_num grid_num3">5000</p>
@@ -55,7 +56,36 @@
                             </div>
                         </el-col>
                     </el-row>
-                    <div>34534534</div>
+                    <!-- 代办事项 -->
+                    <div class="grid_cont_agency">
+                        <div>
+                            <div class="grid_agency_title">
+                                <p>代办事项</p>
+                                <el-button type="primary" size='small' plain>添加</el-button>
+                            </div>
+                            <div class="grid_cont_table">
+                                <el-table
+                                    ref="multipleTable"
+                                    :data="tableData3"
+                                    tooltip-effect="dark"
+                                    style="width: 100%"
+                                    :show-header='showHeader'
+                                    @selection-change="handleSelectionChange">
+                                    <el-table-column type="selection" width="55"></el-table-column>
+                                    <el-table-column prop='date' width='120'></el-table-column>
+                                    <el-table-column prop="address" show-overflow-tooltip></el-table-column>
+                                    <el-table-column width='90'>
+                                        <template slot-scope='scope'>
+                                            <div class="grid_edit">
+                                                <i class="el-icon-edit"></i>
+                                                <i class="el-icon-delete"></i>
+                                            </div>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </el-col>
         </el-row>
@@ -70,7 +100,46 @@
     export default {
         data() {
             return {
-
+                tableData3: [
+                    {
+                        date: '2016-05-03',
+                        address: '今天要去上海市普陀区金沙江路 1518 弄'
+                    }, {
+                        date: '2016-05-02',
+                        address: '今天要去上海市普陀区金沙江路 1518 弄'
+                    }, {
+                        date: '2016-05-04',
+                        address: '今天要去上海市普陀区金沙江路 1518 弄'
+                    }, {
+                        date: '2016-05-01',
+                        address: '今天要去上海市普陀区金沙江路 1518 弄'
+                    }, {
+                        date: '2016-05-08',
+                        address: '今天要去上海市普陀区金沙江路 1518 弄'
+                    }, {
+                        date: '2016-05-06',
+                        address: '今天要去上海市普陀区金沙江路 1518 弄'
+                    }, {
+                        date: '2016-05-07',
+                        address: '今天要去上海市普陀区金沙江路 1518 弄'
+                    }
+                ],
+                multipleSelection: [],
+                showHeader: false
+            }
+        },
+        methods: {
+            toggleSelection(rows) {
+                if (rows) {
+                rows.forEach(row => {
+                    this.$refs.multipleTable.toggleRowSelection(row);
+                });
+                } else {
+                this.$refs.multipleTable.clearSelection();
+                }
+            },
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
             }
         }
     }
@@ -135,18 +204,18 @@
 
 
 
-    .el_col_news {
-        /*padding: 0 10px;*/
-    }
-    .grid_cont_row, .grid_cont_row .el-col {
+    .grid_cont_main {
         padding: 0 10px;
     }
-    .el_col_newsItems {
+    .grid_cont_row .el-col {
+        padding-left: 15px;
+    }
+    .el_items {
         display: flex;
         height: 100px;
         align-items: center;
     }
-    .el_col_newsItems i {
+    .el_items i {
         display: block;
         width: 100px;
         height: 100px;
@@ -183,6 +252,39 @@
     }
     .grid_num3 {
         color: #f25e43;
+    }
+
+    /* 代办事项 */
+    .grid_cont_agency {
+        margin-left: 15px;
+        margin-top: 20px;
+        background-color: #FFF;
+        border-radius: 4px;
+    }
+    .grid_agency_title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #EBEEF5;
+        padding: 10px 25px;
+        font-size: 16px;
+    }
+    .grid_cont_table {
+        padding: 15px;
+    }
+    .grid_cont_table .grid_edit {
+        text-align: right;
+    }
+    .grid_cont_table .grid_edit i {
+        cursor: pointer;
+        font-size: 16px;
+        margin-left: 5px;
+    }
+    .grid_cont_table .grid_edit i:nth-child(1):hover {
+        color: #409EFF;
+    }
+    .grid_cont_table .grid_edit i:nth-child(2):hover {
+        color: #F56C6C;
     }
     
 
